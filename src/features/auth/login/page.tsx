@@ -1,4 +1,4 @@
-import AlertBox from '@/components/Alert';
+import AlertBox from '@/components/notification/Alert';
 import loginAPI from '@/services/auth/loginAPI';
 import { useAuth } from '@/store/contexts/AuthProvider';
 

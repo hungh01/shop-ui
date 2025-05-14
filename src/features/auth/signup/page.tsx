@@ -1,7 +1,7 @@
 import { TextField, Button, Link, Typography, Box } from '@mui/material';
 import { useState } from 'react';
 
-import AlertBox from '@/components/Alert';
+import AlertBox from '@/components/notification/Alert';
 import signupAPI from '@/services/auth/signupAPI';
 import validateEmail from '@/utils/validate/validateEmail';
 
@@ -22,6 +22,9 @@ export default function Signup() {
     const [form, setForm] = useState({
         name: '',
         phone: '',
+        city: '',
+        district: '',
+        ward: '',
         address: '',
         email: '',
         password: '',
@@ -35,7 +38,7 @@ export default function Signup() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!form.name || !form.phone || !form.address || !form.email || !form.password || !form.confirmPassword) {
+        if (!form.name || !form.phone || !form.city || !form.district || !form.ward || !form.address || !form.email || !form.password || !form.confirmPassword) {
             handleAlert('Vui lòng điền đầy đủ thông tin', 'error');
             return;
         }
@@ -61,6 +64,9 @@ export default function Signup() {
                         setForm({
                             name: '',
                             phone: '',
+                            city: '',
+                            district: '',
+                            ward: '',
                             address: '',
                             email: '',
                             password: '',
@@ -94,7 +100,10 @@ export default function Signup() {
                 <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off" width="100%" maxWidth={400}>
                     <TextField fullWidth label="Họ và tên" name="name" value={form.name} onChange={handleChange} margin="normal" />
                     <TextField fullWidth label="Số điện thoại" name="phone" value={form.phone} onChange={handleChange} margin="normal" />
-                    <TextField fullWidth label="Địa chỉ" name="address" value={form.address} onChange={handleChange} margin="normal" />
+                    <TextField fullWidth label="Tỉnh, thành phố" name="city" value={form.city} onChange={handleChange} margin="normal" />
+                    <TextField fullWidth label="Quận, huyện" name="district" value={form.district} onChange={handleChange} margin="normal" />
+                    <TextField fullWidth label="Phường, xã" name="ward" value={form.ward} onChange={handleChange} margin="normal" />
+                    <TextField fullWidth label="Địa chỉ cụ thể" name="address" value={form.address} onChange={handleChange} margin="normal" />
                     <TextField fullWidth label="Email" type="email" name="email" value={form.email} onChange={handleChange} margin="normal" />
                     <TextField fullWidth label="Mật khẩu" type="password" name="password" value={form.password} onChange={handleChange} margin="normal" />
                     <TextField fullWidth label="Xác nhận mật khẩu" type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} margin="normal" />

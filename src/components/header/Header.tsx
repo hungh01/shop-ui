@@ -11,6 +11,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { adminSettingsHeader, routes, settingsHeader, userSettingsHeader } from '@/utils/routes';
 import { Link } from 'react-router-dom';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
@@ -28,8 +29,7 @@ function ResponsiveAppBar() {
   if (loading) {
     return <Circular />; // or a loading spinner
   }
-
-  const settings = accessToken ? (isUser === 'true' ? userSettingsHeader : adminSettingsHeader) : settingsHeader;
+  const settings = accessToken ? (!!isUser ? userSettingsHeader : adminSettingsHeader) : settingsHeader;
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -47,7 +47,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#7c7c7c' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: '#1E1E1E' }}>
       <Container maxWidth="xl" >
         <Toolbar >
           <ShoppingBagIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -143,10 +143,18 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
+          <Box sx={{ flexGrow: 0, mr: 2 }}>
+            <Tooltip title="Cart">
+              <IconButton component={Link} to="/cart" sx={{ p: 0 }}>
+                <ShoppingCartIcon sx={{ fontSize: '1.5rem', color: 'white' }} />
+              </IconButton>
+            </Tooltip>
+
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <PersonOutlineIcon sx={{ fontSize: '2rem' }} />
+                <PersonOutlineIcon sx={{ fontSize: '2rem', color: 'white' }} />
               </IconButton>
             </Tooltip>
             <Menu

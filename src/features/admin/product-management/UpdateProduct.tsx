@@ -9,18 +9,19 @@ import {
     InputLabel,
     TextField,
 } from "@mui/material";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import { API_URL } from "@/utils/api";
 import AlertBox from "@/components/notification/Alert";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 interface ProductOption {
     id: number;
     name: string;
     categoryId: number;
 }
 
-export default function Dashboard() {
+export default function UpdateProduct() {
+    const id = window.location.pathname.split("/").pop();
 
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -39,7 +40,8 @@ export default function Dashboard() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState<number | null>(null);
     const [stock, setStock] = useState<number | null>(null);
-    const [image, setImage] = useState<File | null>(null);
+    const [image, setImage] = useState<string | null>(null);
+    const [newImage, setNewImage] = useState<File | null>(null);
 
     useEffect(() => {
         async function fetchProductOptions() {
@@ -55,14 +57,32 @@ export default function Dashboard() {
         fetchProductOptions();
     }, []);
 
-    const handleAddProduct = async () => {
+    useEffect(() => {
+        async function fetchProductDetail() {
+            try {
+                const response = await fetch(`${API_URL}/products/${id}`);
+                const data = await response.json();
+                setName(data.name);
+                setDescription(data.description);
+                setPrice(data.price);
+                setStock(data.stock);
+                setImage(data.image);
+                setSelectedOption(data.categoryId);
+            } catch (error) {
+                console.error("Error fetching product detail:", error);
+            }
+        }
+
+        fetchProductDetail();
+    }, [id]);
+
+    const handleUpdateProduct = async () => {
         if (
             selectedOption === null ||
             !name ||
             !description ||
             price === null ||
-            stock === null ||
-            !image
+            stock === null
         ) {
             alert("Please fill in all fields.");
             return;
@@ -74,29 +94,34 @@ export default function Dashboard() {
         formData.append("description", description);
         formData.append("price", price.toString());
         formData.append("stock", stock.toString());
-        formData.append("image", image);
+        if (newImage) {
+            formData.append("image", newImage as File);
+        } else {
+            formData.append("image", image as string);
+        }
         formData.append("categoryId", selectedOption.toString());
+        console.log("FormData:", formData);
         try {
-            const response = await fetch(`${API_URL}/products`, {
+            const response = await fetch(`${API_URL}/products/${id}`, {
                 method: "POST",
                 body: formData,
                 credentials: 'include',
             });
 
             if (response.ok) {
-                handleAlert("Thêm mới thành công!", 'success');
+                handleAlert("Cập nhật thành công!", 'success');
                 setName("");
                 setDescription("");
                 setPrice(null);
                 setStock(null);
                 setImage(null);
                 setSelectedOption(null);
+                window.location.href = "/admin/management";
             } else {
-                handleAlert("Thêm mới thất bại.", 'error');
-
+                handleAlert("Cập nhật thất bại.", 'error');
             }
         } catch (error) {
-            handleAlert("Thêm mới thất bại.", 'error');
+            handleAlert("Cập nhật thất bại.", 'error');
             console.error("Error adding product:", error);
         }
     };
@@ -146,15 +171,14 @@ export default function Dashboard() {
                             Mô tả sản phẩm
                         </Typography>
                         <CKEditor
-                            editor={ClassicEditor as unknown as { create(...args: any): Promise<any>; EditorWatchdog: any; ContextWatchdog: any; }}
+                            editor={ClassicEditor as any}
                             data={description}
                             config={{
-                                simpleUpload: {
-                                    uploadUrl: `${API_URL}/image-description`, // 👈 API nhận ảnh
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    }
-                                }
+                                toolbar: [
+                                    'heading', '|',
+                                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                                    'blockQuote', 'undo', 'redo'
+                                ]
                             }}
                             onChange={(event, editor) => {
                                 const content = editor.getData();
@@ -178,27 +202,54 @@ export default function Dashboard() {
                         onChange={(e) => setStock(Number(e.target.value))}
                         sx={{ marginBottom: 2 }}
                     />
-                    <Button
-                        variant="outlined"
-                        component="label"
-                        sx={{ marginBottom: 2 }}
-                    >
-                        Upload Image
-                        <input
-                            type="file"
-                            accept="image/*"
-                            hidden
-                            onChange={(e) => {
-                                if (e.target.files?.[0]) {
-                                    setImage(e.target.files[0]);
-                                }
-                            }}
-                        />
-                    </Button>
                     {image && (
                         <Box sx={{ marginBottom: 2 }}>
+                            <img
+                                src={`${API_URL}${image}`}
+                                alt="Selected"
+                                style={{
+                                    maxWidth: "100%",
+                                    height: "auto",
+                                    borderRadius: "4px",
+                                    marginTop: "8px",
+                                    marginBottom: "8px",
+                                }}
+                            />
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={() => setImage(null)}
+                                sx={{ marginBottom: 2 }}
+                            >
+                                Remove Image
+                            </Button>
+                        </Box>
+                    )
+                    }
+                    {!image
+                        && (
+                            <Button
+                                variant="outlined"
+                                component="label"
+                                sx={{ marginBottom: 2 }}
+                            >
+                                Upload Image
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    hidden
+                                    onChange={(e) => {
+                                        if (e.target.files?.[0]) {
+                                            setNewImage(e.target.files[0]);
+                                        }
+                                    }}
+                                />
+                            </Button>
+                        )}
+                    {newImage && (
+                        <Box sx={{ marginBottom: 2 }}>
                             <Typography variant="body2" gutterBottom>
-                                Selected Image: {image.name}
+                                Selected Image: {newImage.name}
                             </Typography>
                             <Button
                                 variant="outlined"
@@ -214,9 +265,9 @@ export default function Dashboard() {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleAddProduct}
+                    onClick={handleUpdateProduct}
                 >
-                    Add Product
+                    Update Product
                 </Button>
             </Box>
         </>

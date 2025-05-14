@@ -9,18 +9,18 @@ import {
     InputLabel,
     TextField,
 } from "@mui/material";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import { API_URL } from "@/utils/api";
 import AlertBox from "@/components/notification/Alert";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 interface ProductOption {
     id: number;
     name: string;
     categoryId: number;
 }
 
-export default function Dashboard() {
+export default function AddProduct() {
 
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -146,15 +146,14 @@ export default function Dashboard() {
                             Mô tả sản phẩm
                         </Typography>
                         <CKEditor
-                            editor={ClassicEditor as unknown as { create(...args: any): Promise<any>; EditorWatchdog: any; ContextWatchdog: any; }}
+                            editor={ClassicEditor as any}
                             data={description}
                             config={{
-                                simpleUpload: {
-                                    uploadUrl: `${API_URL}/image-description`, // 👈 API nhận ảnh
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    }
-                                }
+                                toolbar: [
+                                    'heading', '|',
+                                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                                    'blockQuote', 'undo', 'redo'
+                                ]
                             }}
                             onChange={(event, editor) => {
                                 const content = editor.getData();
