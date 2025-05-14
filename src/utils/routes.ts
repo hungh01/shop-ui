@@ -24,11 +24,15 @@ export const routes = [
 export const adminSettingsHeader = [
     {
         title: "DASHBOARD",
-        path: "/dashboard",
+        path: "/admin/dashboard",
     },
     {
         title: "QUẢN LÝ SẢN PHẨM",
-        path: "/products",
+        path: "/admin/management",
+    },
+    {
+        title: "Đơn hàng",
+        path: "/admin/orders",
     },
     {
         title: "Đăng xuất",

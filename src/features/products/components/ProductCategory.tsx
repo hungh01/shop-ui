@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import ProductList from "./ProductList";
 import { ProductCategoryType } from "@/types/product/productCategoryType";
 import ProductCategoryAPI from "@/services/product/productCategoryAPI";
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 export default function ProductCategory() {
     const [categories, setCategories] = useState<ProductCategoryType[]>([]);
@@ -13,7 +14,6 @@ export default function ProductCategory() {
             try {
 
                 const res = await ProductCategoryAPI();
-                console.log("res", res);
                 setCategories(res);
             } catch (err: any) {
                 setError(err.message);
@@ -39,11 +39,22 @@ export default function ProductCategory() {
             }}
         >
             {categories.map((category: ProductCategoryType) => (
-                <ProductList
-                    key={category.id}
-                    productType={category.name}
-                    products={category.products}
-                />
+                <div key={category.id} >
+                    <Typography variant="h5" fontWeight="bold" gutterBottom sx={{ textAlign: "center" }}>
+                        {category.name}
+                    </Typography>
+                    <ProductList
+                        products={category.products}
+                        max={4}
+                    />
+                    <Box display="flex" justifyContent="center" p={2}>
+                        <Button variant="outlined" color="primary"
+                            endIcon={<NavigateNextIcon />}
+                            onClick={() => window.location.href = `/category/${category.id}`}>
+                            Xem thêm sản phẩm
+                        </Button>
+                    </Box >
+                </div>
             ))}
         </Box>
     );
