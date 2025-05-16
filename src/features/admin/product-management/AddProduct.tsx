@@ -155,7 +155,7 @@ export default function AddProduct() {
                                     'blockQuote', 'undo', 'redo'
                                 ]
                             }}
-                            onChange={(event, editor) => {
+                            onChange={(_, editor) => {
                                 const content = editor.getData();
                                 setDescription(content);
                             }}

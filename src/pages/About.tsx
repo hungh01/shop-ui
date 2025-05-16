@@ -1,5 +1,5 @@
 
-import { Box, Container, Grid, Typography, Button, Divider } from '@mui/material';
+import { Container, Grid, Typography, Button, Divider } from '@mui/material';
 
 export default function About() {
     return (

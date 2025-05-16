@@ -5,7 +5,6 @@ import { useAuth } from '@/store/contexts/AuthProvider';
 import { TextField, Button, Checkbox, FormControlLabel, Link, Typography, Box } from '@mui/material';
 
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
 export default function Login() {
 

@@ -180,7 +180,7 @@ export default function UpdateProduct() {
                                     'blockQuote', 'undo', 'redo'
                                 ]
                             }}
-                            onChange={(event, editor) => {
+                            onChange={(_, editor) => {
                                 const content = editor.getData();
                                 setDescription(content);
                             }}

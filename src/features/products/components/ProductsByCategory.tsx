@@ -1,5 +1,5 @@
 import ProductList from "./ProductList";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Pagination, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import getProductByCategory from "@/services/product/getProductByCategory";
 import { useParams } from "react-router-dom";
