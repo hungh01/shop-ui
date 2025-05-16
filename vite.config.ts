@@ -5,6 +5,9 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: 'dist',  // Thư mục build output, mặc định là dist rồi
+  },
   server: {
     port: 8080, // 🔧 Đổi thành port bạn muốn
     //open: true  // Mở trình duyệt tự động khi chạy `npm run dev`
