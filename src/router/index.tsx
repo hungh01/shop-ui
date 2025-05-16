@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainLayout from '@/layouts/MainLayout';
 import Home from '@/pages/Home';
 import About from '@/pages/About';
+import Contact from '@/pages/Contact';
 import NotFound from '@/pages/NotFound';
 import Services from '@/pages/Services';
 import Login from '@/features/auth/login/page';
@@ -20,7 +21,7 @@ import AddProduct from '@/features/admin/product-management/AddProduct';
 import UpdateProduct from '@/features/admin/product-management/UpdateProduct';
 import DashboardLayoutBranding from '@/features/admin/dashboard/Layout';
 import Dashboard from '@/features/admin/dashboard/DashBoard';
-import Contact from '@/pages/Contact';
+
 
 export default function AppRouter() {
     return (
