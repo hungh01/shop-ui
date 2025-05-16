@@ -11,39 +11,37 @@ on:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
 
-      # **Thêm bước này để setup Node 20 trước build**
       - name: Setup Node.js 20
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Build And Deploy
-        id: builddeploy
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Vite app
+        run: npm run build
+
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LIVELY_WAVE_02E456000 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/"        # Thư mục source code React/Vite của bạn
-          api_location: ""         # nếu không có backend, để trống
-          output_location: "build" # Thư mục build output (vite thường là "dist", React CRA là "build")
-  
+          app_location: "/"            # code gốc
+          output_location: "dist"      # thư mục sau khi chạy build
+
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
-        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LIVELY_WAVE_02E456000 }}
