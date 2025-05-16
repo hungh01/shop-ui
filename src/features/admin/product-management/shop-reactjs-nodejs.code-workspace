@@ -1,9 +1,11 @@
 {
 	"folders": [
 		{
+			"name": "shop-ui",
 			"path": "../../../.."
 		},
 		{
+			"name": "shop-backend",
 			"path": "../../../../../shop-backend"
 		}
 	],
