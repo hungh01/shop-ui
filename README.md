@@ -1,67 +1,56 @@
-# React + TypeScript + Vite
+# 🛍️ Personal Clothes Shop Demo
 
-## Set up
-- Start
-```sh
-npm create vite@latest shop-ui -- --template react-ts
+A modern e-commerce web application for a personal clothing shop built with **ReactJS**, **Vite**, **Tailwind CSS**, and **Material UI (MUI)**. This project includes features for both customers and administrators.
+
+## ✨ Features
+
+### 🧑‍💼 For Customers
+- 🔍 **View Products**: Browse the latest clothes with stylish UI and responsive design.
+- ➕ **Add to Cart**: Easily add and manage items in your shopping cart.
+- 🛒 **Place Orders**: Smooth and secure ordering process.
+
+### 🔐 For Admins
+- 📦 **Product Management**: Create, update, and delete products through an admin dashboard.
+- 📊 **Admin Dashboard**: Overview of orders, customers, and statistics to manage the store efficiently.
+### 👩‍💻 Admin Account Demo
+
+To explore the admin features, you can use the following demo account:
+
+- **Email**: admin@demo.com
+- **Password**: Admin@123  
+
+> **Note**: This is a demo account with limited permissions for testing purposes only.
+
+## 🛠️ Tech Stack
+
+| Category        | Technology         |
+|----------------|--------------------|
+| Frontend       | ReactJS, Vite      |
+| Styling        | Tailwind CSS, MUI  |
+| State Management | React Context / Hooks |
+| Icons & UI     | Material UI Icons  |
+| Deployment     | (Optional: Vercel / Netlify / your hosting) |
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v20+ recommended)
+- npm / yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/personal-clothes-shop.git
+cd personal-clothes-shop
+
+# Install dependencies
 npm install
+# or
+yarn install
 
-npm install --save-dev @types/node
-```
-
-- Eslint
-
-```sh
-npm install -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
-```
-
-
-
-- TailwindCss
-
-```sh
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-
-```
-
-- MUI
-
-```sh
-npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/icons-material
-```
-
-- js-cookie
-```sh
-npm install js-cookie
-npm install --save-dev @types/js-cookie
-
-```
-
-
-src/
-├── assets/             # Hình ảnh, fonts, icon, v.v.
-├── components/         # Các component dùng lại được
-│   └── Button/
-│       ├── Button.tsx
-│       └── index.ts
-├── features/           # Theo mô hình feature-based (theo chức năng)
-│   └── auth/
-│       ├── components/
-│       ├── pages/
-│       ├── services/
-│       └── authSlice.ts
-├── layouts/            # Các layout (AuthLayout, MainLayout, ...)
-├── pages/              # Các page chính (route gốc)
-│   ├── Home.tsx
-│   └── NotFound.tsx
-├── router/             # Cấu hình React Router
-│   └── index.tsx
-├── services/           # Gọi API (Axios, fetch, ...)
-├── store/              # Redux store, Zustand store hoặc context
-│   └── index.ts
-├── types/              # Định nghĩa các interface, type chung
-├── utils/              # Các hàm tiện ích (formatDate, validateEmail, ...)
-├── App.tsx
-└── main.tsx# shop-ui
+# Start development server
+npm run dev
+# or
+yarn dev
