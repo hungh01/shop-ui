@@ -1,6 +1,9 @@
 # 🛍️ Personal Clothes Shop Demo
 
 A modern e-commerce web application for a personal clothing shop built with **ReactJS**, **Vite**, **Tailwind CSS**, and **Material UI (MUI)**. This project includes features for both customers and administrators.
+## 🌐 Live Demo
+
+Check out the live demo of the application here: [Personal Clothes Shop Demo](https://lively-wave-02e456000.6.azurestaticapps.net/)
 
 ## ✨ Features
 
@@ -29,7 +32,7 @@ To explore the admin features, you can use the following demo account:
 | Styling        | Tailwind CSS, MUI  |
 | State Management | React Context / Hooks |
 | Icons & UI     | Material UI Icons  |
-| Deployment     | (Optional: Vercel / Netlify / your hosting) |
+| Deployment     | Azure Static Web Apps  |
 
 ## 🚀 Getting Started
 
